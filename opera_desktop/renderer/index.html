@@ -1,0 +1,84 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OPERA AI</title><style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,system-ui,sans-serif;background:#f6f5f1;color:#111;height:100vh;display:flex;overflow:hidden}
+nav{width:220px;background:#fafaf7;border-right:1px solid #eee;display:flex;flex-direction:column;padding:16px;flex-shrink:0}
+.logo{font-size:18px;font-weight:900;padding:12px 0;border-bottom:1px solid #eee;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.lm{width:28px;height:28px;border-radius:8px;background:#111;display:grid;place-items:center;color:#fff;font-size:14px;font-weight:900}
+.nav-item{padding:10px 12px;border-radius:10px;font-size:13px;font-weight:700;color:#888;margin-bottom:2px;cursor:pointer;transition:.15s;display:flex;align-items:center;gap:8px}
+.nav-item:hover,.nav-item.active{background:#f0f0ec;color:#111;transition:all .2s ease}
+.nav-bottom{margin-top:auto;padding-top:12px;border-top:1px solid #eee}
+main{flex:1;display:flex;flex-direction:column;padding:28px;overflow-y:auto}
+h1{font-size:22px;font-weight:900;margin-bottom:16px}
+.sb{height:36px;background:#fafaf7;border-top:1px solid #eee;display:flex;align-items:center;padding:0 20px;font-size:12px;color:#888;gap:24px;flex-shrink:0}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:10px;font-size:13px;font-weight:800;border:none;cursor:pointer;transition:.15s}
+.btn-p{background:#111;color:#fff}.btn-p:hover{background:#000}
+.btn-o{background:transparent;border:1px solid #ddd;color:#111}.btn-o:hover{border-color:#aaa}
+.page{display:none}.page.active{display:block}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.card{background:#fff;border:1px solid #eee;border-radius:16px;padding:20px}
+.card h2{font-size:15px;font-weight:800;margin-bottom:12px}
+.empty{text-align:center;padding:40px;color:#888;font-size:13px}
+input,textarea,select{width:100%;padding:12px;border:2px solid #eee;border-radius:12px;font-size:14px;font-family:inherit;background:#fff;margin-bottom:12px}
+textarea{resize:vertical;min-height:80px}
+input:focus,textarea:focus{border-color:#111;outline:none}
+.mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:100;align-items:center;justify-content:center}
+.modal{background:#fff;border-radius:20px;padding:28px;max-width:480px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.15)}
+.modal h2{font-size:18px;margin-bottom:16px}
+.ma{display:flex;gap:10px;margin-top:20px;justify-content:flex-end}
+.dot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:6px}
+.dg{background:#39aa56}.dr{background:#e74c3c}.dc{background:#ccc}
+@media(max-width:800px){nav{width:60px}.nav-item span:last-child{display:none}.g2{grid-template-columns:1fr}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+</style></head><body><div class="mo" id="wm" style="display:flex;align-items:center;justify-content:center">
+<div class="modal" style="max-width:560px;padding:36px">
+<h2 style="font-size:26px;margin-bottom:8px">👋 Welcome to OPERA AI</h2>
+<p style="color:#666;line-height:1.7;margin-bottom:20px;font-size:14px">
+Your local AI operating environment. Files stay on your machine.<br>
+<strong style="color:#111">Only selected folders are accessible.</strong> No cloud upload required.
+</p>
+<div style="background:#f8f8f5;border-radius:12px;padding:16px;margin-bottom:20px">
+<div style="display:grid;grid-template-columns:24px 1fr;gap:10px;margin-bottom:12px;font-size:13px;color:#444">
+<span style="color:#39aa56">✓</span><span>Private by default — your files never leave your computer</span>
+<span style="color:#39aa56">✓</span><span>You choose which folders OPERA can access</span>
+<span style="color:#39aa56">✓</span><span>Persistent background task execution</span>
+<span style="color:#39aa56">✓</span><span>You stay in control — approve risky actions</span>
+</div></div>
+<div style="display:flex;gap:10px">
+<button class="btn btn-p" onclick="closeWelcome()" style="flex:1">Get Started →</button>
+</div></div></div>
+<script>function closeWelcome(){document.getElementById('wm').style.display='none';}</script>
+<nav><div class="logo"><div class="lm">O</div><span>OPERA AI</span></div>
+<div class="nav-item active" onclick="sp('workspace')"><span>🏠</span><span>Workspace</span></div>
+<div class="nav-item" onclick="sp('files')"><span>📁</span><span>Files</span></div>
+<div class="nav-item" onclick="sp('tasks')"><span>⚡</span><span>Tasks</span></div>
+<div class="nav-item" onclick="sp('memory')"><span>🧠</span><span>Memory</span></div>
+<div class="nav-item" onclick="sp('approvals')"><span>🛡️</span><span>Approvals</span></div>
+<div class="nav-item" onclick="sp('settings')"><span>⚙️</span><span>Settings</span></div>
+<div class="nav-bottom"><div class="nav-item" onclick="selFolder()"><span>📂</span><span>Select Folder</span></div></div></nav>
+<main id="mc">
+<div id="pw" class="page active"><h1>Local Workspace</h1>
+<div class="g2"><div class="card"><h2>📂 Selected Folders</h2><div id="fl" class="empty">No folders selected yet</div><button class="btn btn-o" style="margin-top:12px" onclick="selFolder()">+ Select Folder</button></div>
+<div class="card"><h2>📊 Today</h2><div id="ts" class="empty">No activity yet</div></div></div>
+<div class="card" style="margin-top:16px"><h2>💬 Local Chat</h2>
+<textarea id="ci" placeholder="e.g., Organize my Downloads folder"></textarea>
+<div style="display:flex;gap:10px"><button class="btn btn-p" onclick="submitTask()">Submit Task</button><button class="btn btn-o" onclick="ge('ci').value=''">Clear</button></div>
+<div id="cr" style="margin-top:12px;font-size:13px;color:#888;min-height:40px"></div></div></div>
+<div id="pf" class="page"><h1>📁 Files</h1><div id="fb" class="empty">Select a folder to browse</div></div>
+<div id="pt" class="page"><h1>⚡ Tasks</h1><div id="tl" class="empty">No tasks yet</div></div>
+<div id="pm" class="page"><h1>🧠 Memory</h1><div class="g2"><div class="card"><h2>Workflows</h2><div id="mw" class="empty">None</div></div><div class="card"><h2>Patterns</h2><div id="mp" class="empty">None</div></div></div></div>
+<div id="pa" class="page"><h1>🛡️ Approvals</h1><div id="al" class="empty">No pending approvals</div></div>
+<div id="ps" class="page"><h1>⚙️ Settings</h1><div class="card"><h2>AI Engine</h2><button class="btn btn-p" onclick="op.startEngine()">▶ Start</button><button class="btn btn-o" onclick="op.stopEngine()">■ Stop</button><div style="margin-top:12px;font-size:13px;color:#888">Status: <span id="es">OFF</span></div></div>
+<div class="card" style="margin-top:12px"><h2>About</h2><p style="font-size:13px;color:#888;line-height:1.7">OPERA AI v0.1.0-alpha<br>Local AI Operating Environment<br>Data stays on your device</p></div></div>
+</main>
+<div class="sb"><div><span id="ed" class="dot dc"></span>Engine: <span id="se">Off</span></div><div>Folders: <span id="sf">0</span></div><div>Tasks: <span id="st">0</span></div></div>
+<div class="mo" id="am"><div class="modal"><h2 id="at">⚠️ Approval</h2><p id="amg" style="color:#666;line-height:1.6"></p><div class="ma"><button class="btn btn-o" onclick="deny()">Deny</button><button class="btn btn-p" style="background:#e74c3c" onclick="approve()">Approve</button></div></div></div>
+<script>
+const op=window.opera;let folders=[],ca=null;
+function ge(i){return document.getElementById(i)}
+function sp(n){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));ge('p'+n[0]).classList.add('active');document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));}
+async function selFolder(){const p=await op.selectFolder();if(p){folders.push(p);ge('fl').innerHTML='<div style="padding:6px 0">'+p+'</div>';ge('sf').textContent=folders.length;}}
+async function submitTask(){const p=ge('ci').value;if(!p)return;ge('cr').innerHTML='<span style="color:#888">Submitting...</span>';const t=await op.submitTask({prompt:p,type:'general'});if(t)ge('cr').innerHTML='Task submitted: '+t.id;ge('ci').value='';}
+op.onTaskUpdate(t=>{const l=ge('tl');if(t.status==='pending')l.innerHTML='<div style="padding:8px 12px;background:#fff;border:1px solid #eee;border-radius:8px;margin-bottom:4px;font-size:13px;display:flex;align-items:center;gap:8px"><span class="dg" style="width:6px;height:6px;border-radius:50%;display:inline-block;animation:pulse 1.5s infinite"></span>'+t.prompt.substring(0,50)+' <span style="color:#888;font-size:11px;margin-left:auto">queued</span></div>'+l.innerHTML;ge('st').textContent=parseInt(ge('st').textContent)+1;});
+op.onEngineStatus(s=>{ge('es').textContent=s;ge('se').textContent=s;ge('ed').className='dot '+(s==='running'?'dg':'dc');});
+op.getTasks().then(t=>{if(t.length)ge('tl').innerHTML=t.reverse().map(t=>'<div style="padding:8px 12px;background:#fff;border:1px solid #eee;border-radius:8px;margin-bottom:4px;font-size:13px"><span style="color:#39aa56">></span> '+t.prompt.substring(0,50)+' <span style="color:#888;font-size:11px">'+t.status+'</span></div>').join('');});
+</script></body></html>

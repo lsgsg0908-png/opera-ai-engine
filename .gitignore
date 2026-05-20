@@ -1,0 +1,36 @@
+# Data
+opera_engine/data/
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.lock
+
+# Media (test artifacts)
+*.png
+*.jpg
+*.jpeg
+*.mp4
+*.mp3
+*.gif
+
+# Cache
+hf_cache/
+.ipynb_checkpoints/
+
+# Build
+node_modules/
+dist/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temp
+backup*/
+outputs/
+*.bak
+*.orig

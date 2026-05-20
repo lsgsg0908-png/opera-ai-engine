@@ -1,0 +1,42 @@
+{
+  "name": "opera-ai-desktop",
+  "version": "0.1.0-alpha",
+  "description": "OPERA AI \u2014 Local AI Operating Environment",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "build:win": "electron-builder --win",
+    "build:mac": "electron-builder --mac"
+  },
+  "build": {
+    "appId": "com.opera-ai.desktop",
+    "productName": "OPERA AI",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "mac": {
+      "target": "dmg"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "extraResources": [
+      {
+        "from": "../opera_engine",
+        "to": "engine"
+      }
+    ]
+  },
+  "dependencies": {
+    "electron-store": "^8.1.0",
+    "fs-extra": "^11.2.0"
+  },
+  "devDependencies": {
+    "electron": "^30.0.0",
+    "electron-builder": "^25.0.0"
+  }
+}
